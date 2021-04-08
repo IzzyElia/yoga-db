@@ -9,9 +9,6 @@ const http = require('http').Server(server);
 const io = require('socket.io')(http);
 const eventController = require('./event-controller');
 const databaseHook = require('./routes/api/database');
-const { post } = require('./routes/api/api');
-const { json } = require('express');
-
 
 const port = process.env.port || 8000;
 //handlebars view
