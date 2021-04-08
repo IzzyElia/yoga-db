@@ -143,7 +143,7 @@ a {
     min-height: 35px;
 
     margin: auto;
-    border-radius: 50%;
+    border-radius: 25%;
     border:none;
     font-size: x-large;
     text-align: center;
@@ -152,7 +152,8 @@ a {
 }
 
 .section-info .remove-line-button-wrapper button {
-    background-image:radial-gradient(#ffdbba, white);
+    background-image:radial-gradient(#ffdfd5, #e4f6ff);
+    background-color: transparent;
     box-shadow: inherit inherit inherit inherit #ffdbba;
 }
 
@@ -180,7 +181,7 @@ a {
 
 
 .section-info .add-line-button-wrapper button {
-    background-image:radial-gradient(lemonchiffon, white);
+    background-image:radial-gradient(lemonchiffon, #e4f6ff);
     box-shadow: inherit inherit inherit inherit lemonchiffon;
 }
 
