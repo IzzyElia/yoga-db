@@ -11,7 +11,12 @@ function generateSearchTypeButton (searchParam, buttonText) {
         const buttonID = `search-type-selector-${searchTypeButtonIDCounter}`
         const buttonElement = Object.assign(document.createElement('button'), {
             id:buttonID,
-            onclick:() => {setActiveElementOrToggleOff(buttonID, 'search-type-selector-button'); updateIndex()},
+            onclick:() => {
+                setActiveElementOrToggleOff(buttonID, 'search-type-selector-button');
+                updateIndex().then(() => {
+                    doSearchOnLocalIndex();
+                })
+            },
             classList:[`search-param=${searchParam}`]
         }) 
         buttonElement.innerHTML = buttonText
@@ -48,31 +53,34 @@ function getActiveElement (group) {
     if(elements.length == 0) { return null; }
     element = elements[0];
     return element;
-    //wip
 }
 
-function updateIndex() {
-    let searchSection = 'english-names' //default
-    const selectedButton = getActiveElement('search-type-selector-button');
-    if (selectedButton != null) {
-        selectedButton.classList.forEach(clas => {
-            if (clas.startsWith('search-param=')) {
-                searchSection = clas.split('search-param=')[1];
-            }
-        });
-    }
-    fetch(`/api/index/${searchSection}`)
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        index = data;
+async function updateIndex() {
+    return new Promise((resolve) => {
+        let searchSection = 'english_names' //default
+        const selectedButton = getActiveElement('search-type-selector-button');
+        if (selectedButton != null) {
+            selectedButton.classList.forEach(clas => {
+                if (clas.startsWith('search-param=')) {
+                    searchSection = clas.split('search-param=')[1];
+                }
+            });
+        }
+        fetch(`/api/index/${searchSection}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            index = data;
+            resolve()
+        })
     })
 }
 
 function doSearchOnLocalIndex() { //load search results from the index as it exists now
     let html = ``;
     const search = document.getElementById(searchBarID).value;
+    console.log(search);
     if (search == '') {
         document.getElementById(searchResultsAreaId).innerHTML = '';
         return;
