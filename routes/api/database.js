@@ -17,17 +17,20 @@ class database {
     async getPoseAsObject (tableName) {
         return new Promise(resolve => {
             let tableObj = {}
+            //tableName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
             tableObj.poseName = tableName;
             tableObj.responseStatus = 200;
             let db = new sqlite.Database(this.filePath, sqlite.OPEN_CREATE | sqlite.OPEN_READWRITE, (err) => {
                 if (err) {console.log(err);}
             })
+            console.log(tableName);
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`, [tableName], (err, row) => {
                 if (err) {
                     console.log (err);
                     tableObj.responseStatus = 500;
                 }
                 else if (row == null) {
+                    console.log(`Can't find table ${tableName}`)
                     tableObj.responseStatus = 204;
                 }
                 else {
@@ -126,7 +129,7 @@ class database {
         db.run(`UPDATE ${table} SET content = ? WHERE id = ?`, [newContent, id], (err) => logIfError(err));
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', table.toLowerCase(), id, newContent, 'update', user);
+            eventController.emit('poses-database-modified', table, id, newContent, 'update', user);
         })
     }
 
@@ -143,7 +146,7 @@ class database {
         });
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', table.toLowerCase(), lastID, content, 'add', user);
+            eventController.emit('poses-database-modified', table, lastID, content, 'add', user);
         })
     }
 
@@ -159,7 +162,7 @@ class database {
         })
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', tableName.toLowerCase(), id, null, 'delete', user);
+            eventController.emit('poses-database-modified', tableName, id, null, 'delete', user);
         })
     }
     

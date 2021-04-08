@@ -106,7 +106,8 @@ a {
 .contents {
     margin-top: 5vh;
     border-top: 2vh double darkgoldenrod;
-    background-image:radial-gradient(#B0E0FA, #E1F3FD);
+    border-bottom: 2vh double darkgoldenrod;
+    background-image:radial-gradient(#e4f6ff, #bed8ff);
 }
 
 .contents h2 {

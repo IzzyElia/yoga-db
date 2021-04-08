@@ -25,12 +25,14 @@ router.get('/help', (request, response) => {
 })
 
 router.get('/pose/:sanskrit', (request, response) => {
-    posesDB.getPoseAsObject(request.params.sanskrit)
-    .then ((poseObj) => {
+    console.log(request.params.sanskrit)
+    posesDB.getPoseAsObject(request.params.sanskrit).then ((poseObj) => {
         if (poseObj.responseStatus != 200) {
+            console.log(poseObj.responseStatus);
             response.status(poseObj.responseStatus).send('Failed');
         }
         else {
+            console.log(JSON.stringify(poseObj));
             response.send(JSON.stringify(poseObj));
         }
     })
@@ -61,23 +63,23 @@ router.post('/pose/create/:sanskrit/', (request, response) => {
 })
 
 router.post('/pose/edit/:sanskrit/:id', (request, response) => {
-    posesDB.addPoseTableIfNotExists(request.params.sanskrit.toLowerCase(), schema.poseEntryKeyslist)
+    posesDB.addPoseTableIfNotExists(request.params.sanskrit, schema.poseEntryKeyslist)
     .then((result) => {
-        posesDB.updateEdit(request.params.sanskrit.toLowerCase(), request.params.id, request.body.content, request.query.userid);
+        posesDB.updateEdit(request.params.sanskrit, request.params.id, request.body.content, request.query.userid);
         response.send();
     })
 })
 
 router.post('/pose/add/:sanskrit/:section', (request, response) => {
-    posesDB.addPoseTableIfNotExists(request.params.sanskrit.toLowerCase(), schema.poseEntryKeyslist)
+    posesDB.addPoseTableIfNotExists(request.params.sanskrit, schema.poseEntryKeyslist)
     .then((result) => {
-        posesDB.addEdit(request.params.sanskrit.toLowerCase(), request.params.section.toLowerCase(), request.body.content, request.query.userid);
+        posesDB.addEdit(request.params.sanskrit, request.params.section, request.body.content, request.query.userid);
         response.send();
     })
 })
 
 router.delete('/pose/:sanskrit/:id', (request, response) => {
-    posesDB.deleteEdit(request.params.sanskrit.toLowerCase(), request.params.id, request.query.userid);
+    posesDB.deleteEdit(request.params.sanskrit, request.params.id, request.query.userid);
     response.send();
 })
 

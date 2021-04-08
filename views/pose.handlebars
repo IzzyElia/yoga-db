@@ -7,10 +7,13 @@ let socket = io();
 socket.on('poses-database-modified', (table, id, content, method, user) => {
     console.log(`socket received table:${table} id:${id} content:${content} method:${method} user:${user}`);
     updateIndex();
-    const currentTable = '{{poseObj.poseName}}'.toLowerCase();
+    const currentTable = '{{poseObj.poseName}}';
     if (table == currentTable) {
         if (method == 'delete' || method == 'add') {
-            location.reload();
+            $.getJSON( `/api/pose/${table}`, function(data) {
+                let section = null
+                generateSection(data, section)
+            })
         }
         else {
             const element = document.getElementById(`id-${id}`);

@@ -18,7 +18,7 @@ function removeItem (table, itemID) {
         url: `/api/pose/${table}/${itemID}?userid=${userID}`,
         method: 'delete',
         success: (response) => {
-            location.reload();
+            //location.reload();
         }
     })
 }
@@ -32,7 +32,7 @@ function addItem(table, section) {
             content: ''
         }),
         success: (response) => {
-            location.reload();
+            //location.reload();
         }
     })
 }
@@ -61,5 +61,6 @@ function generateSection (poseObj, section) {
         out += `</ul>`;
         let element = document.getElementById(section);
         element.innerHTML = out;
+
     })
 }
