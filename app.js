@@ -10,7 +10,7 @@ const io = require('socket.io')(http);
 const eventController = require('./event-controller');
 const databaseHook = require('./routes/api/database');
 
-const port = process.env.port || 8000;
+const port = process.env.PORT || 8000;
 //handlebars view
 server.engine('handlebars', expressHandlebars({defaultLayout: 'index'}));
 server.set('view engine', 'handlebars');
