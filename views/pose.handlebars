@@ -41,6 +41,10 @@ socket.on('poses-database-modified', (table, section, id, content, method, user)
         <script>generateSection({{{stringify poseObj}}}, 'hips')</script>
         <div class="section-info" id="hips"></div>
 
+        <h3>Motion of the Spine:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'spinal_motions')</script>
+        <div class="section-info" id="spinal_motions"></div>
+
         <h3>Contraindications:</h3>
         <script>generateSection({{{stringify poseObj}}}, 'contraindications')</script>
         <div class="section-info" id="contraindications"></div>
