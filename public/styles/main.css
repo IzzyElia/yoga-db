@@ -1,0 +1,203 @@
+html {
+    background-color: white;
+}
+body {
+    margin: 0;
+}
+button {
+    cursor: pointer;
+}
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+
+.header {
+    margin: 0;
+}
+
+.header h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    height: auto;
+    padding: 10px 0;
+    background-image: linear-gradient(lightblue, white);
+    text-align: center;
+    font-size: 10vw;
+}
+.header h2 {
+    text-align: center;
+    margin: 0;
+    margin-right: 5vw;
+    font-size: 6vw;
+}
+.search-type-selector {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 12%;
+}
+.search-type-selector button {
+    width: 100%;
+    height: 75px;
+    font-size: 4vw;
+    transition-duration: 0.5s;
+    background-color: khaki;
+}
+.search-type-selector button:hover {
+    width: 200%;
+}
+.search-type-selector .search-type-selector-button-active {
+    width: 200%;
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+.search-results a:nth-child(odd){
+    background-color: gainsboro;
+}
+.search-results a:hover {
+    background-color: black;
+    color: white;
+}
+
+.pose-search-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 20%;
+}
+.pose-search-area input {
+    height: 50px;
+    font-size: xx-large;
+}
+.pose-search-area .search-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.pose-search-area button {
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:50px;
+	padding:12px 37px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.pose-search-area button:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.pose-search-area button:active {
+	position:relative;
+	top:1px;
+}
+
+.contents {
+    margin-top: 5vh;
+    border-top: 2vh double darkgoldenrod;
+    background-image:radial-gradient(#B0E0FA, #E1F3FD);
+}
+
+.contents h2 {
+    text-align: center;
+    margin-right: 2vw;
+    font-size: xx-large;
+    
+}
+
+.details {
+    margin-left: 16vw;
+}
+
+.details h3 {
+    margin-bottom: 5px;
+}
+
+.section-info li {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin: 0;
+    padding-bottom: 1vh;
+}
+
+.section-info .button-wrapper {
+    margin: 0;
+}
+
+.section-info .button-wrapper button {
+    min-width: 35px;
+    max-height: 35px;
+    min-height: 35px;
+
+    margin: auto;
+    border-radius: 50%;
+    border:none;
+    font-size: x-large;
+    text-align: center;
+    outline-style: none;
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.7);
+}
+
+.section-info .remove-line-button-wrapper button {
+    background-image:radial-gradient(#ffdbba, white);
+    box-shadow: inherit inherit inherit inherit #ffdbba;
+}
+
+.section-info .remove-line-button-wrapper {
+    transition-duration: 0.5s;
+    opacity: 0;
+}
+
+.section-info li:hover .remove-line-button-wrapper {
+    opacity: 100%;
+}
+
+@media (hover: hover) {
+    .section-info .add-line-button-wrapper {
+        transition-duration: 0.5s;
+        opacity: 0;
+        max-height: 20px;
+    }
+    
+    .section-info li:hover .add-line-button-wrapper {
+        opacity: 100%;
+        max-height: 35px;
+    }
+}
+
+
+.section-info .add-line-button-wrapper button {
+    background-image:radial-gradient(lemonchiffon, white);
+    box-shadow: inherit inherit inherit inherit lemonchiffon;
+}
+
+.section-info .text-area-wrapper {
+    min-width: 60%;
+    max-width: 70%;
+    background-color: inherit;
+    margin-left: 10px;
+}
+.section-info .text-area {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+.section-info span {
+    font-size: x-large;
+    outline: 0px none transparent;
+}
+.section-info span:focus {
+    background-color: lavender;
+}

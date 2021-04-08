@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <script src="/js/socketio/socket.io.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/caret.js"></script>
+    <script src="/js/frontend-generic.js"></script>
+    <script src="/js/searchbar.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <section class="header">
+        <a href="/"><h1>Izzy's Yoga DB</h1></a>
+        <h2>Search By:</h2>
+        <div class="search-type-selector">
+            <script>generateSearchTypeButton ('english_names', 'Name')</script>
+            <script>generateSearchTypeButton ('contraindications', 'Contraindiction')</script>
+            <script>generateSearchTypeButton ('benefits', 'Benefits')</script>
+        </div>
+        <div class="pose-search-area">
+            <input id="pose-search-bar" type="text" onkeyup="doSearchOnLocalIndex()">
+            <div class="search-results" id="search-results">
+                
+            </div>
+        </div>
+    </section>
+    <section>
+        {{{body}}}
+    </section>
+</body>
+</html>

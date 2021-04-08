@@ -1,0 +1,84 @@
+<script src="/js/poseview.js"></script>
+
+<script>
+let socket = io();
+//The socket handler uses {{poseObj}} from handlebars, which is why it's here instead of in frontend.js
+//Handlebars is nice but next time let's just generate the page ourselves yea?
+socket.on('poses-database-modified', (table, id, content, method, user) => {
+    console.log(`socket received table:${table} id:${id} content:${content} method:${method} user:${user}`);
+    updateIndex();
+    const currentTable = '{{poseObj.poseName}}'.toLowerCase();
+    if (table == currentTable) {
+        if (method == 'delete' || method == 'add') {
+            location.reload();
+        }
+        else {
+            const element = document.getElementById(`id-${id}`);
+            if (user != userID) {
+                element.innerHTML = content;
+            }
+        }
+    }
+})
+</script>
+<section class="contents">
+<h2>Sanskrit: {{underscoreToSpace poseObj.poseName}}</h2>
+
+    <section class="details">
+        <h3>English Names:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'english_names')</script>
+        <div class="section-info" id="english_names"></div>
+
+        <h3>Hips:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'hips')</script>
+        <div class="section-info" id="hips"></div>
+
+        <h3>Contraindications:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'contraindications')</script>
+        <div class="section-info" id="contraindications"></div>
+
+        <h3>Alternative Poses:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'alternative_poses')</script>
+        <div class="section-info" id="alternative_poses"></div>
+
+        <h3>Counter Poses:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'counter_poses')</script>
+        <div class="section-info" id="counter_poses"></div>
+
+        <h3>Benefits</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'benefits')</script>
+        <div class="section-info" id="benefits"></div>
+
+        <h3>Enter Breath:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'enter_breath')</script>
+        <div class="section-info" id="enter_breath"></div>
+
+        <h3>Exit Breath:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'exit_breath')</script>
+        <div class="section-info" id="exit_breath"></div>
+
+        <h3>Refinement Cues:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'refinement_cues')</script>
+        <div class="section-info" id="refinement_cues"></div>
+
+        <h3>Transition Cues:</h3>
+        <script>generateSection({{{stringify poseObj}}}, 'transition_cues')</script>
+        <div class="section-info" id="transition_cues"></div>
+    </section>
+    
+</section>
+<!--
+<ul>
+    {{#each poseObj.contraindications}}
+        <li>
+            <button class="add-line-button" onclick="removeItem('{{../poseObj.poseName}}', '{{this.id}}')">Delete</button>
+            <div>
+                <span contenteditable="true" id="id-{{this.id}}" onkeyup="editItem('{{../poseObj.poseName}}','{{this.id}}','id-{{this.id}}')">{{{this.content}}}</span>
+            </div>
+        </li>
+    {{/each}}
+    <li>
+        <button class="remove-line-button" onclick="addItem('contraindicationsInput', '{{poseObj.poseName}}', 'contraindications')">Add</button>
+    </li>
+</ul>
+-->
