@@ -23,7 +23,6 @@ class database {
             let db = new sqlite.Database(this.filePath, sqlite.OPEN_CREATE | sqlite.OPEN_READWRITE, (err) => {
                 if (err) {console.log(err);}
             })
-            console.log(tableName);
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`, [tableName], (err, row) => {
                 if (err) {
                     console.log (err);
@@ -41,6 +40,7 @@ class database {
                         const entryObj = {
                             id: row.id,
                             content: row.content,
+                            //section: row.section,
                             user: row.user,
                             metadata: row.metadata
                         }
@@ -129,7 +129,7 @@ class database {
         db.run(`UPDATE ${table} SET content = ? WHERE id = ?`, [newContent, id], (err) => logIfError(err));
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', table, id, newContent, 'update', user);
+            eventController.emit('poses-database-modified', table, null, id, newContent, 'update', user);
         })
     }
 
@@ -138,7 +138,7 @@ class database {
         let db = new sqlite.Database(this.filePath, sqlite.OPEN_CREATE | sqlite.OPEN_READWRITE, (err) => {
             if (err) {console.log(err);}
         })
-        db.run (`INSERT INTO ${table} (section, content) VALUES (?, ?);`, [section, content], (err) => {
+        db.run (`INSERT INTO ${table} (section, content) VALUES (?, ?);`, [section, content], function (err) { //arrow function breaks lastID
             if (err) {console.log(`${err} in attempt to add edit entry with parameters Table:${table} Section:${section} Content:${content}`)}
             else {
                 lastID = this.lastID
@@ -146,7 +146,7 @@ class database {
         });
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', table, lastID, content, 'add', user);
+            eventController.emit('poses-database-modified', table, section, lastID, content, 'add', user);
         })
     }
 
@@ -154,15 +154,25 @@ class database {
         let db = new sqlite.Database(this.filePath, sqlite.OPEN_CREATE | sqlite.OPEN_READWRITE, (err) => {
             if (err) {console.log(err);}
         })
+        let section = null;
         db.get (`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`, [tableName], (err, row) => {
             if (err) {console.log(err);}
             else {
-                db.run (`DELETE FROM ${tableName} WHERE id=?;`, [id], (err) => logIfError(err))
+                db.get(`SELECT section FROM ${tableName} WHERE id=?;`, [id], (err, row) => {
+                    logIfError(err);
+                    if (row != undefined) {
+                        section = row.section;
+                        db.run (`DELETE FROM ${tableName} WHERE id=?;`, [id], (err) => logIfError(err))
+                    }
+                    else {
+                        console.log(`Failed to delete row ${id} (not found)`)
+                    }
+                })
             }
         })
         db.close((err) => {
             logIfError(err);
-            eventController.emit('poses-database-modified', tableName, id, null, 'delete', user);
+            eventController.emit('poses-database-modified', tableName, section, id, null, 'delete', user);
         })
     }
     

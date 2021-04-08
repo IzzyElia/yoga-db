@@ -4,15 +4,20 @@
 let socket = io();
 //The socket handler uses {{poseObj}} from handlebars, which is why it's here instead of in frontend.js
 //Handlebars is nice but next time let's just generate the page ourselves yea?
-socket.on('poses-database-modified', (table, id, content, method, user) => {
+socket.on('poses-database-modified', (table, section, id, content, method, user) => {
     console.log(`socket received table:${table} id:${id} content:${content} method:${method} user:${user}`);
     updateIndex();
     const currentTable = '{{poseObj.poseName}}';
     if (table == currentTable) {
         if (method == 'delete' || method == 'add') {
             $.getJSON( `/api/pose/${table}`, function(data) {
-                let section = null
                 generateSection(data, section)
+                .then(() =>{
+                    if (user == userID && method == 'add') {
+                        const newElement = document.getElementById(`id-${id}`);
+                        newElement.focus();
+                    }
+                })
             })
         }
         else {

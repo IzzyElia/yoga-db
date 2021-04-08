@@ -52,9 +52,9 @@ io.on('connection', (socket) => {
     })
 })
 
-eventController.on('poses-database-modified', (table, id, content, method, user) => {
-    console.log(`event received ${table} ${id} ${content} ${method} ${user}`);
-    io.emit('poses-database-modified', table, id, content, method, user);
+eventController.on('poses-database-modified', (table, section, id, content, method, user) => {
+    console.log(`event received ${table} ${section} ${id} ${content} ${method} ${user}`);
+    io.emit('poses-database-modified', table, section, id, content, method, user);
 })
 
 http.listen(port);

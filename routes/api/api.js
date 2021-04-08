@@ -28,11 +28,9 @@ router.get('/pose/:sanskrit', (request, response) => {
     console.log(request.params.sanskrit)
     posesDB.getPoseAsObject(request.params.sanskrit).then ((poseObj) => {
         if (poseObj.responseStatus != 200) {
-            console.log(poseObj.responseStatus);
             response.status(poseObj.responseStatus).send('Failed');
         }
         else {
-            console.log(JSON.stringify(poseObj));
             response.send(JSON.stringify(poseObj));
         }
     })

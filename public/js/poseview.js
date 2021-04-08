@@ -37,30 +37,33 @@ function addItem(table, section) {
     })
 }
 
-function generateSection (poseObj, section) {
-    $(document).ready(()=>{
-        let out = `<ul>`;
-        let entries = poseObj[section];
-        if (entries == null) {entries = [];}
-        entries.forEach(entry => {
+async function generateSection (poseObj, section) {
+    return new Promise((resolve) => {
+        $(document).ready(()=>{
+            let out = `<ul>`;
+            let entries = poseObj[section];
+            if (entries == null) {entries = [];}
+            entries.forEach(entry => {
+                out += `
+                <li>
+                    <div class="button-wrapper remove-line-button-wrapper"><button onclick="removeItem('${poseObj.poseName}', '${entry.id}')">-</button></div>
+                    <div class="text-area-wrapper">
+                        <span class="text-area" contenteditable="true" id="id-${entry.id}" onkeyup="editItem('${poseObj.poseName}','${entry.id}')">${entry.content}</span>
+                    </div>
+                </li>
+                `
+            });
             out += `
             <li>
-                <div class="button-wrapper remove-line-button-wrapper"><button onclick="removeItem('${poseObj.poseName}', '${entry.id}')">-</button></div>
-                <div class="text-area-wrapper">
-                    <span class="text-area" contenteditable="true" id="id-${entry.id}" onkeyup="editItem('${poseObj.poseName}','${entry.id}')">${entry.content}</span>
-                </div>
+                <div class="button-wrapper add-line-button-wrapper"><button onclick="addItem('${poseObj.poseName}', '${section}')">+</button></div>
+                <span></span>
             </li>
             `
-        });
-        out += `
-        <li>
-            <div class="button-wrapper add-line-button-wrapper"><button onclick="addItem('${poseObj.poseName}', '${section}')">+</button></div>
-            <span></span>
-        </li>
-        `
-        out += `</ul>`;
-        let element = document.getElementById(section);
-        element.innerHTML = out;
-
+            out += `</ul>`;
+            let element = document.getElementById(section);
+            element.innerHTML = out;
+            console.log('generated section '+section)
+            resolve();
+        })
     })
 }
