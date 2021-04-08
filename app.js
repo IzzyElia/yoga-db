@@ -3,6 +3,7 @@ const server = express();
 const expressHandlebars = require('express-handlebars');
 const passportGoogle = require('passport-google-oauth');
 const path = require('path');
+const fs = require('fs');
 const api = require('./routes/api/api');
 const view = require('./routes/view/view');
 const http = require('http').Server(server);
@@ -37,6 +38,12 @@ server.use('/view', view);
 server.get('/', (request, response) => {
     response.render('main');
 })
+
+server.get('/download/poses', (request, response) => {
+    const readStream = fs.createReadStream(path.join(__dirname, 'routes', 'api', 'databases', 'poses.db'));
+    readStream.pipe(response);
+})
+
 
 io.on('connection', (socket) => {
     console.log (`User connected`);
